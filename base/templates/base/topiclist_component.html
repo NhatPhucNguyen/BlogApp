@@ -1,0 +1,10 @@
+<ul class="nav flex-column mt-5">
+    <li class="nav-item">
+        <a class="nav-link text-white" aria-current="page" href="{% url 'post_list' %}">All <span class="badge bg-primary text-wrap">{{post_count}}</span></a>
+        </li>
+    {% for topic,quantity in topic_post_count.items %}
+        <li class="nav-item">
+        <a class="nav-link text-white" aria-current="page" href="{% url 'post_list' %}?q={{topic}}">{{topic}} <span class="badge bg-primary text-wrap">{{quantity}}</span></a>
+        </li>
+    {% endfor %}                    
+</ul>

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title%}Post List{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 col-md-2 bg-dark text-center" style="min-height: 100vh;">
+                {% include 'base/topiclist_component.html' %}
+            </div>
+            <div class="col">
+                {% include 'base/postlist_component.html' %}
+            </div>
+        </div>
+    </div>    
+{% endblock %}

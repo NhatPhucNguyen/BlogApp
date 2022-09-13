@@ -1,0 +1,28 @@
+{% for post in posts %}
+<div class="container">
+    <div div class="card border-dark border-1" style="width: 100%; margin-top:1rem">
+        <div class="card-header">
+            <h5 class="card-title"><a href="{% url 'post_details' post.id %}"
+                    class="text-decoration-none link-danger">{{post.title}}</a></h5>
+            <h6 class="card-subtitle mb-2 fst-italic text-muted ">{{post.timeCreated}} by <a
+                    href="{% url 'author_profile' post.author.id %}">{{post.author}}</a></h6>
+            <h6 class="card-subtitle mb-2 fst-italic text-muted "> #{{post.topic}}</h6>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{post.body}}</p>
+        </div>
+        {% if request.user == post.author%}
+        <div class="card-footer text-center">
+            <a href="{% url 'post_update' post.id %}" class="card-link">Update</a>
+            <a href="{% url 'post_delete' post.id %}" class="card-link">Delete</a>
+        </div>
+        {% endif %}
+        <div class="card-footer">
+            <span class="text-danger fw-bold">Comments ({{post.comments.all.count}}):</span>
+            {% for comment in post.comments.all|slice:"0:2" %}
+            <div><span class="fst-italic fw-bold">{{comment.author}}</span>: {{comment.body}}</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endfor %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}      
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 col-md-2 bg-dark text-center" style="min-height: 100vh;">
+                <ul class="nav flex-column mt-5">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" aria-current="page" href="{% url 'author_profile' author.id %}">All <span class="badge bg-primary text-wrap">{{post_count}}</span></a>
+                        </li>
+                    {% for topic,quantity in topic_post_count.items %}
+                        <li class="nav-item">
+                        <a class="nav-link text-white" aria-current="page" href="{% url 'author_profile' author.id %}?q={{topic}}">{{topic}} <span class="badge bg-primary text-wrap">{{quantity}}</span></a>
+                        </li>
+                    {% endfor %}                    
+                </ul>
+            </div>
+            <div class="col">
+                <h1 class="text-center">{{author.username}}</h1>  
+                {% include 'base/postlist_component.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}{{post.title}}{% endblock %}
+{% block content %}
+    <div class="card" style="width: 100%;">
+        <div class="card-body text-center">
+            <h5 class="card-title">{{post.title}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{post.timeCreated}}</h6>
+            <p class="card-text">{{post.body}}</p>
+            {% if request.user == post.author %}
+            <a href="{% url 'post_update' post.id %}" class="card-link">Update</a>
+            <a href="{% url 'post_delete' post.id %}" class="card-link">Delete</a>
+            {% endif %}        
+        </div>
+    </div>
+    {% if user.is_authenticated %}
+    <div class="comment-form container mt-2">
+        <h6>Comment as {{user.username}}</h6>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="text" class="form-control" name="body" placeholder="Write your thoughts here ...">              
+        </form>
+    </div>
+    {% endif %}    
+    <div class="comment-container container">        
+        <span class="text-danger">Comments: </span>                
+            {% for comment in comments %}
+                <p><span class="fst-italic fw-bold">{{comment.author}}</span> | <span class="fst-italic">{{comment.timeCreated|timesince}}</span> ago<br>
+                {{comment.body}}
+                {% if comment.author == request.user %}        
+                <a href="{% url 'comment_delete' comment.id %}">Delete</a>
+                {% endif %}
+                </p>                
+            {% endfor %}                
+    </div> 
+{% endblock %}
